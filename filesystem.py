@@ -45,6 +45,7 @@ class Passthrough(Operations):
 
     def _update_md5(self, path):
        full_path = self._full_path(path)
+       # we sanitize the leading "/" to stay consistent on file paths
        self.md5dictionary[path[1:]] = self._get_md5(full_path)
        self.save_hashes()
 
@@ -110,7 +111,12 @@ class Passthrough(Operations):
             'f_frsize', 'f_namemax'))
 
     def unlink(self, path):
-        print("Unlink Called");
+        # MODIFIED 4/15 - Chase
+        if path[1:] in self.md5dictionary:
+           self.md5dictionary.pop(path[1:])
+           self.save_hashes()
+        print("SUCCESS: MD5 removed on unlink.")
+        # END MODIFICATION
         return os.unlink(self._full_path(path))
 
     def symlink(self, name, target):
@@ -133,6 +139,7 @@ class Passthrough(Operations):
         name_path = self._full_path(name)
         os.link(name_path, target_path) # same as rename() here with os.link
         self._update_md5(name_path)
+        print("MD5 saved on link.")
         # return os.link(self._full_path(name), self._full_path(target))
         # END MODIFICATION
 
@@ -144,7 +151,6 @@ class Passthrough(Operations):
 
     def open(self, path, flags):
         full_path = self._full_path(path)
-        print("DEBUG: Open Called")
         # MODIFIED 4/14 - Chase
         # check the integrity before opening the file
         current_md5 = self._get_md5(full_path)
@@ -158,7 +164,7 @@ class Passthrough(Operations):
         elif current_md5 != stored_md5: # if the file is "corrupted"
            print("!!!CRITICAL: FILE CORRUPTED!!!")
         else:
-           print("SUCCESS: File is verified.") 
+           print("SUCCESS: File is verified on open.") 
         # END MODIFICATION
         return os.open(full_path, flags)
 
@@ -169,22 +175,25 @@ class Passthrough(Operations):
         os.chown(full_path,uid,gid) #chown to context uid & gid
         # MODIFIED 4/14 - Chase
         self._update_md5(path)
+        print("DEBUG: MD5 saved on create.")
         # END MODIFICATION
         return fd
 
     def read(self, path, length, offset, fh):
-        print("DEBUG: Read Called");
+        # MODIFIED 4/13 - Chase
+        print("DEBUG: Read Called (MD5 not saved on read!)");
+        # END MODIFICATION
         os.lseek(fh, offset, os.SEEK_SET)
         return os.read(fh, length)
 
     def write(self, path, buf, offset, fh):
-        print("DEBUG: Write Called");
         os.lseek(fh, offset, os.SEEK_SET)
         # MODIFIED 4/14 - Chase
         # need to write BEFORE we get and set the new hash (this took too long to realize)
         # os.write actually returns the # of written bytes, handling that too just in case
         written = os.write(fh, buf)
         self._update_md5(path) # we sneak in here, before write() exits but after the write is complete
+        print("DEBUG: MD5 saved on write.")
         return written
         # END MODIFICATION
         # return os.write(fh, buf)
