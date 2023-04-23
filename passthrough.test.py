@@ -54,7 +54,6 @@ class TestPassthroughMethods(unittest.TestCase):
 
     def generateMD5Hash(self, file_name):
         # Open the file
-        
         file = open(os.path.join(self._base_path, file_name), 'rb')
         # Read contents of the file
         file_data = file.read()
@@ -105,8 +104,9 @@ class TestPassthroughMethods(unittest.TestCase):
         self.md5_file = os.path.join(self._base_path, ".md5_hashes")
         with open(self.md5_file, "rb") as file:
             self.md5dictionary = pickle.load(file)
-        print(self.md5dictionary["empty.txt"])
-        print(self.generateMD5Hash("empty.txt"))
+        storedHash = self.md5dictionary["empty.txt"]
+        realHash = self.generateMD5Hash("empty.txt")
+        self.assertEqual(storedHash, realHash)
         
 
 
