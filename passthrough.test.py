@@ -35,10 +35,10 @@ class TestPassthroughMethods(unittest.TestCase):
     def deleteTestDirs(self):
         if os.path.exists(self._mt_path):
             shutil.rmtree(self._mt_path)
-            print("Successfully removed the Mount Path")
+            print("Success: Removed the Mount Path")
         if os.path.exists(self._base_path):
             shutil.rmtree(self._base_path)
-            print("Successfully removed the Base Path")
+            print("Success: Removed the Base Path")
 
 
     def createTestFile(file):
@@ -64,7 +64,6 @@ class TestPassthroughMethods(unittest.TestCase):
     # Unit Tests
     # ==========
     def testInitPasstrough(self):
-        print("Testing initialization of program.")
         TestPassthroughMethods.makeTestDirs(self)
         print("Success: Directory Creation")
         

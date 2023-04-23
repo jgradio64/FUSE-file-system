@@ -39,7 +39,7 @@ class Passthrough(Operations):
     def _get_md5(self, path):
         # MODIFIED 4/20 - Quang
         if not os.path.exists(self.md5_file):  # if the dictionary exists, load and instantiate it
-            print("DEBUG: .md5_hashes not found")
+            # print("DEBUG: .md5_hashes not found")
             self.md5dictionary = {}
         
         myhash = hashlib.md5()
@@ -115,7 +115,7 @@ class Passthrough(Operations):
             'f_frsize', 'f_namemax'))
 
     def unlink(self, path):
-        print("Unlink Called");
+        # print("Unlink Called");
         return os.unlink(self._full_path(path))
 
     def symlink(self, name, target):
@@ -149,17 +149,17 @@ class Passthrough(Operations):
 
     def open(self, path, flags):
         full_path = self._full_path(path)
-        print("DEBUG: Open Called")
+        # print("DEBUG: Open Called")
         # MODIFIED 4/14 - Chase
         # check the integrity before opening the file
         current_md5 = self._get_md5(full_path)
         stored_md5 = self.md5dictionary.get(path[1:])
 
         if stored_md5 is None: # if we don't have a hash stored for this file
-           print("WARNING: No hash stored for file. Generating and storing hash.")
+        #    print("WARNING: No hash stored for file. Generating and storing hash.")
            self._update_md5(path)
            stored_md5 = current_md5
-           print("SUCCESS: Hash generated and stored.")
+        #    print("SUCCESS: Hash generated and stored.")
         elif current_md5 != stored_md5: # if the file is "corrupted"
            print("!!!CRITICAL: FILE CORRUPTED!!!")
         else:
@@ -178,12 +178,12 @@ class Passthrough(Operations):
         return fd
 
     def read(self, path, length, offset, fh):
-        print("DEBUG: Read Called");
+        # print("DEBUG: Read Called");
         os.lseek(fh, offset, os.SEEK_SET)
         return os.read(fh, length)
 
     def write(self, path, buf, offset, fh):
-        print("DEBUG: Write Called");
+        # print("DEBUG: Write Called");
         os.lseek(fh, offset, os.SEEK_SET)
         # MODIFIED 4/14 - Chase
         # need to write BEFORE we get and set the new hash (this took too long to realize)
@@ -213,7 +213,7 @@ class Passthrough(Operations):
 
 
 def main(mountpoint, root):
-    print("FUSE initialized")
+    # print("FUSE initialized")
     FUSE(Passthrough(root), mountpoint, nothreads=True, foreground=True, allow_other=True)
 
 if __name__ == '__main__':
