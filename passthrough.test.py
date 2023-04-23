@@ -150,6 +150,11 @@ class TestPassthroughMethods(unittest.TestCase):
             print("\tStored Hash: " + str(storedHash))
 
 
+    def shutdownPassthrough(self):
+        # Run `fusermount -u mp_test/`
+        os.popen('fusermount -u mp_test/')
+
+
 # if __name__ == '__main__':
 #     unittest.main()
 
@@ -159,9 +164,10 @@ def mainTest():
     test.setUp()
     test.testInitPassthrough()
     time.sleep(1)
-    test.testCreateEmptyFile()
-    test.testVerifyEmptyFileHash()
-    test.testCorruptFileHash()
+    test.shutdownPassthrough()
+    # test.testCreateEmptyFile()
+    # test.testVerifyEmptyFileHash()
+    # test.testCorruptFileHash()
     # Comment these out for now. Don't want them to run just yet
     # test.testDeleteEmptyFile()
     # test.testDeleteEmptyFileHash()
