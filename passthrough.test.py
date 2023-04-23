@@ -122,7 +122,6 @@ class TestPassthroughMethods(unittest.TestCase):
         self.md5_file = os.path.join(self._base_path, ".md5_hashes")
         with open(self.md5_file, "rb") as file:
             self.md5dictionary = pickle.load(file)
-        print(self.md5dictionary)
         if "empty.txt" in self.md5dictionary:
             print("FAILURE: Hash still found in dictionary.")
         else:
