@@ -64,7 +64,10 @@ class TestPassthroughMethods(unittest.TestCase):
 
 
     def deleteTestFile(file_path):
-        os.remove("rm " + file_path)
+        if os.path.exists(file_path):
+            os.remove(file_path)
+        else:
+            print("The file does not exist") 
 
 
     def initPassthrough(self):
