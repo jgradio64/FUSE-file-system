@@ -62,7 +62,7 @@ class TestPassthroughMethods(unittest.TestCase):
     # ==========
     def testInitPasstrough(self):
         print("Testing initialization of program.")
-        mt, root = TestPassthroughMethods.makeTestDirs()
+        mt, root = TestPassthroughMethods.makeTestDirs(self)
         print("Success: Directory Creation")
         
         try:
