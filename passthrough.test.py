@@ -161,7 +161,6 @@ class PassthroughTest():
 
 def mainTest():
     test = PassthroughTest()
-    test.setUp()
     test.testInitPassthrough()
     time.sleep(1)
     test.testCreateEmptyFile()
