@@ -109,10 +109,10 @@ class TestPassthroughMethods(unittest.TestCase):
 
     def testDeleteEmptyFile(self):
         # Get path to file = mp_test + file name
-        f_path = os.path.join(self._mp_path, "empty.txt")
+        f_path = os.path.join(self.mp_dir, "empty.txt")
         try:
             self.deleteTestFile(f_path)
-            print("File [empty.txt] deleted")
+            print("SUCCESS: File [empty.txt] deleted")
         except:
             print("FAILURE: unable to delete file")
 
