@@ -10,8 +10,8 @@ import hashlib
 import time
 
 
-class TestPassthroughMethods(unittest.TestCase):
-    def setUp(self):
+class PassthroughTest():
+    def __init__(self):
         self.root = os.getcwd()
         self.mp_dir = "mp_test"
         self.base_dir = "base_test"
@@ -160,7 +160,7 @@ class TestPassthroughMethods(unittest.TestCase):
 
 
 def mainTest():
-    test = TestPassthroughMethods()
+    test = PassthroughTest()
     test.setUp()
     test.testInitPassthrough()
     time.sleep(1)
@@ -170,8 +170,9 @@ def mainTest():
     test.testCorruptFile()
 
     # Comment these out for now. Don't want them to run just yet
-    # test.testDeleteEmptyFile()
-    # test.testDeleteEmptyFileHash()
+    test.testDeleteEmptyFile()
+    test.testDeleteEmptyFileHash()
+    test.shutdownPassthrough()
 
 
 mainTest()
