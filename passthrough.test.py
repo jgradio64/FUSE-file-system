@@ -1,9 +1,7 @@
 from __future__ import with_statement
 
 import subprocess
-import passthrough
 import pickle
-import unittest
 import os
 import shutil
 import hashlib
