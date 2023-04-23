@@ -104,7 +104,8 @@ class TestPassthroughMethods(unittest.TestCase):
         self.md5_file = os.path.join(self._base_path, ".md5_hashes")
         with open(self.md5_file, "rb") as file:
             self.md5dictionary = pickle.load(file)
-        print(self.md5dictionary)
+        print(self.md5dictionary["empty.txt"])
+        print(self.generateMD5Hash("empty.txt"))
         
 
 
