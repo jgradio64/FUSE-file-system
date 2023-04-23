@@ -144,9 +144,9 @@ class TestPassthroughMethods(unittest.TestCase):
 
 
     def testCorruptFile(self):
-        print("Checking to see if correct warning pops up")
         self.corruptTestFile("empty.txt")
         self.initPassthrough()
+        self.accessCorruptedFile("empty.txt")
 
 
     def shutdownPassthrough(self):
