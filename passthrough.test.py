@@ -63,7 +63,7 @@ class TestPassthroughMethods(unittest.TestCase):
         hash = hashlib.md5()
 
 
-    def deleteTestFile(file_path):
+    def deleteTestFile(self, file_path):
         print(file_path)
         if os.path.exists(file_path):
             os.remove(file_path)
