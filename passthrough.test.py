@@ -44,13 +44,17 @@ class PassthroughTest():
 
 
     def generateMD5Hash(self, file_name):
-        # Open the file
-        file = open(os.path.join(self._base_path, file_name), 'rb')
-        # Read contents of the file
-        file_data = file.read()
-        # Get hash of file
-        md5_value = hashlib.md5(file_data).hexdigest()
-        return md5_value
+        checksum = hashlib.md5()
+        with open(os.path.join(self._base_path, file_name), 'rb') as file:
+            buffer = file.read()
+            checksum.update(buffer)
+        # # Open the file
+        # file = open(os.path.join(self._base_path, file_name), 'rb')
+        # # Read contents of the file
+        # file_data = file.read()
+        # # Get hash of file
+        # md5_value = hashlib.md5(file_data).hexdigest()
+        return checksum.hexdigest()
 
 
     def corruptTestFile(self, file_name):
@@ -60,6 +64,7 @@ class PassthroughTest():
         f = open(file_path, "w")
         f.write(corrupted_data)
         f.close()
+        
 
     def deleteTestFile(self, file_path):
         if os.path.exists(file_path):
