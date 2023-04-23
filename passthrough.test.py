@@ -28,7 +28,7 @@ class TestPassthroughMethods(unittest.TestCase):
             # Delete directory then create a new one
             self.deleteTestDirs()
 
-        # os.makedirs(mt_test_path)
+        os.makedirs(mt_test_path)
         os.makedirs(base_test_path)
 
 
