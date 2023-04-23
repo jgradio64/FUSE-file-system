@@ -57,8 +57,8 @@ class TestPassthroughMethods(unittest.TestCase):
 
 
 
-    def initPasstrhough(mt_point, rt_point):
-        passthrough.main(mountpoint=mt_point, root=rt_point)
+    def initPasstrhough(self):
+        passthrough.main(mountpoint=self._mt_path, root=self._base_path)
 
 
     # Unit Tests
@@ -69,7 +69,7 @@ class TestPassthroughMethods(unittest.TestCase):
         print("Success: Directory Creation")
         
         try:
-            TestPassthroughMethods.initPasstrhough(mt, root)
+            TestPassthroughMethods.initPasstrhough(self)
             print("Success: Initialization of Passthrough")
         except:
             print("Error: Initialization of Passthrough")
