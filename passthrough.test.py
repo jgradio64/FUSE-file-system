@@ -150,6 +150,7 @@ class PassthroughTest():
         self.accessCorruptedFile("empty.txt")
 
 
+
     def shutdownPassthrough(self):
         # Run `fusermount -u mp_test/`
         os.popen('fusermount -u mp_test/')
@@ -167,7 +168,7 @@ def mainTest():
     test.testVerifyEmptyFileHash()
     test.shutdownPassthrough()
     test.testCorruptFile()
-
+    time.sleep(1)
     # Comment these out for now. Don't want them to run just yet
     test.testDeleteEmptyFile()
     test.testDeleteEmptyFileHash()
