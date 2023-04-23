@@ -11,24 +11,24 @@ import time
 
 
 class TestPassthroughMethods(unittest.TestCase):
+    def setUp(self):
+        self.root = os.getcwd()
+        self.mt_dir = "mp_test"
+        self.base_dir = "base_test"
+        self._mt_path = os.path.join(self.root, self.mt_dir)
+        self._base_path = os.path.join(self.root, self.base_dir)
+        self.md5_file = None
+        self.md5dictionary = None
+
+
     # Helper Methods
     # ==============
     def makeTestDirs(self):
-        root = os.getcwd()
-        self.mt_dir = "mp_test"
-        self.base_dir = "base_test"
-        mp_test_path = os.path.join(root, self.mt_dir)
-        base_test_path = os.path.join(root, self.base_dir)
-        self._mt_path = mp_test_path
-        self._base_path = base_test_path
-
-        if os.path.exists(mp_test_path) or os.path.exists(base_test_path):
+        if os.path.exists(self._mt_path) or os.path.exists(self._base_path):
             # Delete directory then create a new one
             self.deleteTestDirs()
-
-        os.makedirs(mp_test_path)
-        os.makedirs(base_test_path)
-
+        os.makedirs(self._mt_path)
+        os.makedirs(self._base_path)
 
 
     def deleteTestDirs(self):
@@ -67,7 +67,6 @@ class TestPassthroughMethods(unittest.TestCase):
         print("Deleting the test file: " + file_path)
 
 
-
     def initPassthrough(self):
         self.pt_proc = subprocess.Popen(["python", "passthrough.py", self.base_dir, self.mt_dir])
 
@@ -86,7 +85,6 @@ class TestPassthroughMethods(unittest.TestCase):
 
     
     def testCreateEmptyFile(self):
-        
         print("Testing creation of files & MD5 Hash")
         f_name = "empty.txt"
         f_data = ""
@@ -104,7 +102,6 @@ class TestPassthroughMethods(unittest.TestCase):
         realHash = self.generateMD5Hash("empty.txt")
         self.assertEqual(storedHash, realHash)
         
-
 
 if __name__ == '__main__':
     unittest.main()
