@@ -83,7 +83,7 @@ class TestPassthroughMethods(unittest.TestCase):
 
 
     def accessCorruptedFile(self, file_name):
-        command = 'cat ' + os.path.join(self.base_dir, file_name)
+        command = 'cat ' + os.path.join(self.mp_dir, file_name)
         os.popen(command)
 
 
