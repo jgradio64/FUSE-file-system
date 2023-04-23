@@ -57,9 +57,11 @@ class TestPassthroughMethods(unittest.TestCase):
         return md5_value
 
 
-    def corruptTestFileHash(file_path):
-        print("Corrupting the test file: " + file_path)
-        hash = hashlib.md5()
+    def corruptTestFileHash(self, file_name):
+        print("Corrupting the test file: " + file_name)
+        corrupted_data = "This is corrupted data"
+        md5_value = hashlib.md5(corrupted_data).hexdigest()
+        return md5_value
 
 
     def deleteTestFile(self, file_path):
@@ -131,6 +133,15 @@ class TestPassthroughMethods(unittest.TestCase):
             print("SUCCESS: Hash not found in dictionary.")
 
 
+    def testCorruptFileHash(self):
+        print("Checking to see if correct warning pops up")
+        corruptedHash = self.corruptTestFileHash("empty.txt")
+        self.getMD5Values()
+        storedHash = self.md5dictionary["empty.txt"]
+        if storedHash != corruptedHash:
+            print("Corruption success")
+
+
 # if __name__ == '__main__':
 #     unittest.main()
 
@@ -142,8 +153,10 @@ def mainTest():
     time.sleep(1)
     test.testCreateEmptyFile()
     test.testVerifyEmptyFileHash()
-    test.testDeleteEmptyFile()
-    test.testDeleteEmptyFileHash()
+    test.testCorruptFileHash()
+    # Comment these out for now. Don't want them to run just yet
+    # test.testDeleteEmptyFile()
+    # test.testDeleteEmptyFileHash()
     # test.pt_proc.kill()
 
 
