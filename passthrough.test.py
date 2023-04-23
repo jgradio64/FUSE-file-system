@@ -58,12 +58,10 @@ class TestPassthroughMethods(unittest.TestCase):
 
 
     def corruptTestFileHash(self, file_name):
-        print("Corrupting the test file: " + file_name)
         corrupted_data = "This is corrupted data"
         # Generate fake hash
         md5_value = hashlib.md5(corrupted_data.encode('utf-8')).hexdigest()
-        corrupted_hash = {file_name: md5_value}
-        self.md5dictionary.update(corrupted_hash)
+        self.md5dictionary[file_name] = md5_value
         self.saveHashes()
 
 
@@ -103,7 +101,6 @@ class TestPassthroughMethods(unittest.TestCase):
 
     
     def testCreateEmptyFile(self):
-        print("Testing creation of files & MD5 Hash")
         f_name = "empty.txt"
         f_data = ""
         try:
@@ -143,11 +140,14 @@ class TestPassthroughMethods(unittest.TestCase):
 
     def testCorruptFileHash(self):
         print("Checking to see if correct warning pops up")
-        corruptedHash = self.corruptTestFileHash("empty.txt")
+        self.getMD5Values()
+        oldHash = self.md5dictionary["empty.txt"]
+
+        self.corruptTestFileHash("empty.txt")
         self.getMD5Values()
         storedHash = self.md5dictionary["empty.txt"]
-        if storedHash != corruptedHash:
-            print("Corruption success")
+        if oldHash != storedHash:
+            print("SUCCESS: Hash Corrupted.")
 
 
 # if __name__ == '__main__':
