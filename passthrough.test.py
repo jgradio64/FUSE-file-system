@@ -100,15 +100,16 @@ class TestPassthroughMethods(unittest.TestCase):
             self.md5dictionary = pickle.load(file)
         storedHash = self.md5dictionary["empty.txt"]
         realHash = self.generateMD5Hash("empty.txt")
-        self.assertEqual(storedHash, realHash)
+        print(self.assertEqual(storedHash, realHash))
         
 
-if __name__ == '__main__':
-    unittest.main()
+# if __name__ == '__main__':
+#     unittest.main()
 
 
 def mainTest():
     test = TestPassthroughMethods()
+    test.setUp()
     test.testInitPassthrough()
     time.sleep(1)
     test.testCreateEmptyFile()
