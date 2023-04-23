@@ -22,7 +22,7 @@ class TestPassthroughMethods(unittest.TestCase):
         base_test_path = os.path.join(root, base_dir)
         self._mt_path = mt_test_path
         self._base_path = base_test_path
-        
+
         if os.path.exists(mt_test_path) or os.path.exists(base_test_path):
             # Delete directory then create a new one
             self.deleteTestDirs()
@@ -65,7 +65,7 @@ class TestPassthroughMethods(unittest.TestCase):
     # ==========
     def testInitPasstrough(self):
         print("Testing initialization of program.")
-        mt, root = TestPassthroughMethods.makeTestDirs(self)
+        TestPassthroughMethods.makeTestDirs(self)
         print("Success: Directory Creation")
         
         try:
