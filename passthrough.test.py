@@ -6,6 +6,7 @@ import unittest
 import os
 import shutil
 import hashlib
+import time
 
 
 class TestPassthroughMethods(unittest.TestCase):
@@ -89,6 +90,7 @@ class TestPassthroughMethods(unittest.TestCase):
 
     
     def testCreateEmptyFile(self):
+        time.sleep(1)
         print("Testing creation of files & MD5 Hash")
         f_name = "empty.txt"
         f_data = ""
