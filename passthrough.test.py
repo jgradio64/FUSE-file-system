@@ -14,12 +14,16 @@ class TestPassthroughMethods(unittest.TestCase):
 
     # Helper Methods
     # ==============
-    def makeTestDirs():
+    def makeTestDirs(self):
         root = os.getcwd()
         mt_dir = "mt_test"
         base_dir = "base_test"
         mt_test_path = os.path.join(root, mt_dir)
         base_test_path = os.path.join(root, base_dir)
+        if os.path.exists(mt_test_path) or os.path.exists(base_test_path):
+            # Delete directory then create a new one
+            self.deleteTestDirs(mt_test_path, base_test_path)
+
         os.makedirs(mt_test_path)
         os.makedirs(base_test_path)
         return mt_test_path, base_test_path
