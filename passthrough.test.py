@@ -105,10 +105,7 @@ class TestPassthroughMethods(unittest.TestCase):
 
 
     def testVerifyEmptyFileHash(self):
-        # self.md5_file = os.path.join(self._base_path, ".md5_hashes")
-        # with open(self.md5_file, "rb") as file:
-        #     self.md5dictionary = pickle.load(file)
-        self.getMD5Values(self)
+        self.getMD5Values()
         storedHash = self.md5dictionary["empty.txt"]
         realHash = self.generateMD5Hash("empty.txt")
         print("Hash's Equal: " + str(storedHash == realHash))
@@ -126,10 +123,7 @@ class TestPassthroughMethods(unittest.TestCase):
 
 
     def testDeleteEmptyFileHash(self):
-        # self.md5_file = os.path.join(self._base_path, ".md5_hashes")
-        # with open(self.md5_file, "rb") as file:
-        #     self.md5dictionary = pickle.load(file)
-        self.getMD5Values(self)
+        self.getMD5Values()
         if "empty.txt" in self.md5dictionary:
             print("FAILURE: Hash still found in dictionary.")
         else:
