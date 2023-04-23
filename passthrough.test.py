@@ -64,8 +64,8 @@ class TestPassthroughMethods(unittest.TestCase):
 
 
     def deleteTestFile(file_path):
+        print(file_path)
         if os.path.exists(file_path):
-            print(file_path)
             os.remove(file_path)
         else:
             print("The file does not exist") 
