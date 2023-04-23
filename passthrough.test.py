@@ -134,7 +134,6 @@ class TestPassthroughMethods(unittest.TestCase):
             print("FAILURE: unable to delete file")
 
 
-
     def testDeleteEmptyFileHash(self):
         self.getMD5Values()
         if "empty.txt" in self.md5dictionary:
@@ -173,7 +172,6 @@ def mainTest():
     # Comment these out for now. Don't want them to run just yet
     # test.testDeleteEmptyFile()
     # test.testDeleteEmptyFileHash()
-    # test.pt_proc.kill()
 
 
 mainTest()
