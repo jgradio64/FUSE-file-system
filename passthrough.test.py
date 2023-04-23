@@ -1,8 +1,7 @@
 from __future__ import with_statement
-from unittest.mock import MagicMock
+from threading import Thread
 
 import passthrough
-
 import unittest
 import os
 import shutil
@@ -104,7 +103,8 @@ class TestPassthroughMethods(unittest.TestCase):
 
 def mainTest():
     test = TestPassthroughMethods()
-    test.testInitPassthrough()
+    t_passthrough = Thread(test.testInitPassthrough())
+    t_passthrough.run()
     test.testCreateEmptyFile()
 
 
