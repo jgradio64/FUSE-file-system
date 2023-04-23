@@ -71,7 +71,9 @@ class TestPassthroughMethods(unittest.TestCase):
 
 
     def initPassthrough(self):
-        passthrough.main(mountpoint=self._mt_path, root=self._base_path)
+        n = (mountpoint=self._mt_path, root=self._base_path)
+        t = Thread(target=passthrough.main, args=(n,))
+        t.start()
 
 
     # Unit Tests
@@ -103,8 +105,7 @@ class TestPassthroughMethods(unittest.TestCase):
 
 def mainTest():
     test = TestPassthroughMethods()
-    t_passthrough = Thread(test.testInitPassthrough())
-    t_passthrough.start()
+    test.testInitPassthrough()
     test.testCreateEmptyFile()
 
 
