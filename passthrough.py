@@ -115,7 +115,12 @@ class Passthrough(Operations):
             'f_frsize', 'f_namemax'))
 
     def unlink(self, path):
-        print("Unlink Called");
+        # MODIFIED 4/15 - Chase
+        if path[1:] in self.md5dictionary:
+           self.md5dictionary.pop(path[1:])
+           self.save_hashes()
+        print("SUCCESS: MD5 removed on unlink.")
+        # END MODIFICATION
         return os.unlink(self._full_path(path))
 
     def symlink(self, name, target):
