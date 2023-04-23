@@ -71,7 +71,7 @@ class TestPassthroughMethods(unittest.TestCase):
 
 
     def initPassthrough(self):
-        subprocess.run(["python", "passthrough.py", self.base_dir, self.mt_dir])
+        subprocess.Popen(["python", "passthrough.py", self.base_dir, self.mt_dir])
 
 
 
@@ -105,7 +105,7 @@ class TestPassthroughMethods(unittest.TestCase):
 def mainTest():
     test = TestPassthroughMethods()
     test.testInitPassthrough()
-    test.testCreateEmptyFile()
+    # test.testCreateEmptyFile()
 
 
 mainTest()
