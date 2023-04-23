@@ -56,7 +56,7 @@ class TestPassthroughMethods(unittest.TestCase):
 
     # Unit Tests
     # ==========
-    def testInitPasstrough():
+    def testInitPasstrough(self):
         print("Testing initialization of program.")
         mt, root = TestPassthroughMethods.makeTestDirs()
         print("Success: Directory Creation")
