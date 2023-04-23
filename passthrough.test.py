@@ -13,9 +13,9 @@ import time
 class TestPassthroughMethods(unittest.TestCase):
     def setUp(self):
         self.root = os.getcwd()
-        self.mt_dir = "mp_test"
+        self.mp_dir = "mp_test"
         self.base_dir = "base_test"
-        self._mt_path = os.path.join(self.root, self.mt_dir)
+        self._mp_path = os.path.join(self.root, self.mp_dir)
         self._base_path = os.path.join(self.root, self.base_dir)
         self.md5_file = None
         self.md5dictionary = None
@@ -24,16 +24,16 @@ class TestPassthroughMethods(unittest.TestCase):
     # Helper Methods
     # ==============
     def makeTestDirs(self):
-        if os.path.exists(self._mt_path) or os.path.exists(self._base_path):
+        if os.path.exists(self._mp_path) or os.path.exists(self._base_path):
             # Delete directory then create a new one
             self.deleteTestDirs()
-        os.makedirs(self._mt_path)
+        os.makedirs(self._mp_path)
         os.makedirs(self._base_path)
 
 
     def deleteTestDirs(self):
-        if os.path.exists(self._mt_path):
-            shutil.rmtree(self._mt_path)
+        if os.path.exists(self._mp_path):
+            shutil.rmtree(self._mp_path)
             print("Success: Removed the Mount Path")
         if os.path.exists(self._base_path):
             shutil.rmtree(self._base_path)
@@ -42,7 +42,7 @@ class TestPassthroughMethods(unittest.TestCase):
 
     def createTestFile(self, file, data):
         print("Creating the test file: " + file)
-        file_path = os.path.join(self._mt_path, file)
+        file_path = os.path.join(self._mp_path, file)
         f = open(file_path, "w")
         f.write(data)
         f.close()
@@ -68,7 +68,7 @@ class TestPassthroughMethods(unittest.TestCase):
 
 
     def initPassthrough(self):
-        self.pt_proc = subprocess.Popen(["python", "passthrough.py", self.base_dir, self.mt_dir])
+        self.pt_proc = subprocess.Popen(["python", "passthrough.py", self.base_dir, self.mp_dir])
 
 
     #    Tests    #
@@ -105,7 +105,7 @@ class TestPassthroughMethods(unittest.TestCase):
 
     def testDeleteEmptyFile(self):
         # Get path to file = mp_test + file name
-        f_path = os.path.join(self._mt_path, "empty.txt")
+        f_path = os.path.join(self.mp_dir, "empty.txt")
         try:
             self.deleteTestFile(f_path)
             print("File [empty.txt] deleted")
