@@ -60,7 +60,7 @@ class TestPassthroughMethods(unittest.TestCase):
     def corruptTestFileHash(self, file_name):
         print("Corrupting the test file: " + file_name)
         corrupted_data = "This is corrupted data"
-        md5_value = hashlib.md5(corrupted_data).hexdigest()
+        md5_value = hashlib.md5(corrupted_data.encode('utf-8')).hexdigest()
         return md5_value
 
 
