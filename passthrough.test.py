@@ -146,6 +146,8 @@ class TestPassthroughMethods(unittest.TestCase):
     def testCorruptFile(self):
         self.corruptTestFile("empty.txt")
         self.initPassthrough()
+        # Wait for process to start back up again
+        time.sleep(1)
         self.accessCorruptedFile("empty.txt")
 
 
