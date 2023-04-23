@@ -75,6 +75,7 @@ class TestPassthroughMethods(unittest.TestCase):
 
 def mainTest():
     test = TestPassthroughMethods()
+    test.testInitPasstrough()
 
 
 mainTest()
