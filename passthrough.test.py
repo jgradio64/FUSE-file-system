@@ -71,9 +71,7 @@ class TestPassthroughMethods(unittest.TestCase):
 
 
     def initPassthrough(self):
-        
-        n = (self._mt_path, self._base_path)
-        t = Thread(target=passthrough.main, args=(n,))
+        t = Thread(target=passthrough.main, args=(self._mt_path, self._base_path,))
         t.start()
 
 
