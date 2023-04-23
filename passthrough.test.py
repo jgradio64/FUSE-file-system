@@ -158,10 +158,6 @@ class PassthroughTest():
         self.accessCorruptedFile("empty.txt")
 
 
-# if __name__ == '__main__':
-#     unittest.main()
-
-
 def mainTest():
     test = PassthroughTest()
     test.testInitPassthrough()
