@@ -106,7 +106,7 @@ class TestPassthroughMethods(unittest.TestCase):
     def testDeleteEmptyFile(self):
         # Get path to file = mp_test + file name
         f_path = os.path.join(self._mt_path, "empty.txt")
-        print("File [empty.txt] delted")
+        print("File [empty.txt] deleted")
 
 
 
