@@ -34,14 +34,13 @@ class TestPassthroughMethods(unittest.TestCase):
     def deleteTestDirs(self):
         if os.path.exists(self._mp_path):
             shutil.rmtree(self._mp_path)
-            print("Success: Removed the Mount Path")
+            print("SUCCESS: Removed the Mount Path")
         if os.path.exists(self._base_path):
             shutil.rmtree(self._base_path)
-            print("Success: Removed the Base Path")
+            print("SUCCESS: Removed the Base Path")
 
 
     def createTestFile(self, file, data):
-        print("Creating the test file: " + file)
         file_path = os.path.join(self._mp_path, file)
         f = open(file_path, "w")
         f.write(data)
@@ -64,7 +63,6 @@ class TestPassthroughMethods(unittest.TestCase):
 
 
     def deleteTestFile(self, file_path):
-        print(file_path)
         if os.path.exists(file_path):
             os.remove(file_path)
         else:
@@ -85,13 +83,13 @@ class TestPassthroughMethods(unittest.TestCase):
     # =========== #
     def testInitPassthrough(self):
         TestPassthroughMethods.makeTestDirs(self)
-        print("Success: Directory Creation")
+        print("SUCCESS: Directory Creation")
         
         try:
             TestPassthroughMethods.initPassthrough(self)
-            print("Success: Initialization of Passthrough")
+            print("SUCCESS: Initialization of Passthrough")
         except:
-            print("Error: Initialization of Passthrough")
+            print("FAILURE: Initialization of Passthrough")
 
     
     def testCreateEmptyFile(self):
@@ -108,7 +106,10 @@ class TestPassthroughMethods(unittest.TestCase):
         self.getMD5Values()
         storedHash = self.md5dictionary["empty.txt"]
         realHash = self.generateMD5Hash("empty.txt")
-        print("Hash's Equal: " + str(storedHash == realHash))
+        if storedHash == realHash:
+            print("SUCCESS: Checksum verification")
+        else:
+            print("FAILUE: Checksum verification")
 
 
     def testDeleteEmptyFile(self):
@@ -128,8 +129,6 @@ class TestPassthroughMethods(unittest.TestCase):
             print("FAILURE: Hash still found in dictionary.")
         else:
             print("SUCCESS: Hash not found in dictionary.")
-
-
 
 
 # if __name__ == '__main__':
