@@ -140,14 +140,14 @@ class TestPassthroughMethods(unittest.TestCase):
 
     def testCorruptFileHash(self):
         print("Checking to see if correct warning pops up")
-        self.getMD5Values()
-        oldHash = self.md5dictionary["empty.txt"]
-
         self.corruptTestFileHash("empty.txt")
         self.getMD5Values()
         storedHash = self.md5dictionary["empty.txt"]
-        if oldHash != storedHash:
+        realHash = self.generateMD5Hash("empty.txt")
+        if realHash != storedHash:
             print("SUCCESS: Hash Corrupted.")
+            print("\tReal Checksum: " + str(realHash))
+            print("\tStored Hash: " + str(storedHash))
 
 
 # if __name__ == '__main__':
