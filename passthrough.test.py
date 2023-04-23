@@ -1,7 +1,6 @@
 from __future__ import with_statement
 from unittest.mock import MagicMock
 
-import run
 import passthrough
 
 import unittest
