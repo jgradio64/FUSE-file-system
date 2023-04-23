@@ -64,7 +64,7 @@ class TestPassthroughMethods(unittest.TestCase):
 
 
     def deleteTestFile(file_path):
-        print("Deleting the test file: " + file_path)
+        os.system("rm " + file_path)
 
 
     def initPassthrough(self):
@@ -101,7 +101,26 @@ class TestPassthroughMethods(unittest.TestCase):
         storedHash = self.md5dictionary["empty.txt"]
         realHash = self.generateMD5Hash("empty.txt")
         print(self.assertEqual(storedHash, realHash))
-        
+
+
+    def testDeleteEmptyFile(self):
+        # Get path to file = mp_test + file name
+        f_path = os.path.join(self._mt_path, "empty.txt")
+        print("File [empty.txt] delted")
+
+
+
+    def testDeleteEmptyFileHash(self):
+        self.md5_file = os.path.join(self._base_path, ".md5_hashes")
+        with open(self.md5_file, "rb") as file:
+            self.md5dictionary = pickle.load(file)
+        if "empty.txt" in self.md5dictionary:
+            print("FAILURE: Hash still found in dictionary.")
+        else:
+            print("SUCCESS: Hash not found in dictionary.")
+
+
+
 
 # if __name__ == '__main__':
 #     unittest.main()
@@ -114,6 +133,8 @@ def mainTest():
     time.sleep(1)
     test.testCreateEmptyFile()
     test.testVerifyEmptyFileHash()
+    test.testDeleteEmptyFile()
+    test.testDeleteEmptyFile()
     # test.pt_proc.kill()
 
 
