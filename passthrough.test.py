@@ -60,8 +60,11 @@ class TestPassthroughMethods(unittest.TestCase):
     def corruptTestFileHash(self, file_name):
         print("Corrupting the test file: " + file_name)
         corrupted_data = "This is corrupted data"
+        # Generate fake hash
         md5_value = hashlib.md5(corrupted_data.encode('utf-8')).hexdigest()
-        return md5_value
+        corrupted_hash = {file_name: md5_value}
+        self.md5dictionary.update(corrupted_hash)
+        self.save_hashes()
 
 
     def deleteTestFile(self, file_path):
@@ -79,6 +82,11 @@ class TestPassthroughMethods(unittest.TestCase):
         self.md5_file = os.path.join(self._base_path, ".md5_hashes")
         with open(self.md5_file, "rb") as file:
             self.md5dictionary = pickle.load(file)
+
+
+    def saveHashes(self):
+        with open(self.md5_file, "wb") as file:
+            pickle.dump(self.md5dictionary, file)
 
 
     #    Tests    #
