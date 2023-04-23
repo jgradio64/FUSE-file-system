@@ -2,6 +2,7 @@ from __future__ import with_statement
 
 import subprocess
 import passthrough
+import pickle
 import unittest
 import os
 import shutil
@@ -99,6 +100,14 @@ class TestPassthroughMethods(unittest.TestCase):
             print("FAILURE: Could not create the file " + f_name)
 
 
+    def testVerifyEmptyFileHash(self):
+        self.md5_file = os.path.join(self._base_path, ".md5_hashes")
+        with open(self.md5_file, "rb") as file:
+            self.md5dictionary = pickle.load(file)
+        print(self.md5dictionary)
+        
+
+
 # if __name__ == '__main__':
 #     unittest.main()
 
@@ -108,7 +117,8 @@ def mainTest():
     test.testInitPassthrough()
     time.sleep(1)
     test.testCreateEmptyFile()
-    test.pt_proc.kill()
+    test.testVerifyEmptyFileHash()
+    # test.pt_proc.kill()
 
 
 mainTest()

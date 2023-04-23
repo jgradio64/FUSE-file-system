@@ -154,7 +154,6 @@ class Passthrough(Operations):
         # check the integrity before opening the file
         current_md5 = self._get_md5(full_path)
         stored_md5 = self.md5dictionary.get(path[1:])
-        print(self.md5dictionary)
 
         if stored_md5 is None: # if we don't have a hash stored for this file
         #    print("WARNING: No hash stored for file. Generating and storing hash.")
