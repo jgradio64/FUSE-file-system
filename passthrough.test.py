@@ -105,7 +105,7 @@ class TestPassthroughMethods(unittest.TestCase):
 def mainTest():
     test = TestPassthroughMethods()
     test.testInitPassthrough()
-    # test.testCreateEmptyFile()
+    test.testCreateEmptyFile()
 
 
 mainTest()
