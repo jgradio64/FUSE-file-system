@@ -95,11 +95,11 @@ class TestPassthroughMethods(unittest.TestCase):
     #    Tests    #
     # =========== #
     def testInitPassthrough(self):
-        TestPassthroughMethods.makeTestDirs(self)
+        self.makeTestDirs()
         print("SUCCESS: Directory Creation")
         
         try:
-            TestPassthroughMethods.initPassthrough(self)
+            self.initPassthrough()
             print("SUCCESS: Initialization of Passthrough")
         except:
             print("FAILURE: Initialization of Passthrough")
@@ -146,7 +146,7 @@ class TestPassthroughMethods(unittest.TestCase):
     def testCorruptFile(self):
         print("Checking to see if correct warning pops up")
         self.corruptTestFile("empty.txt")
-        self.initPassthrough(self)
+        self.initPassthrough()
 
 
     def shutdownPassthrough(self):
