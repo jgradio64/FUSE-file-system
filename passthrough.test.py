@@ -6,6 +6,8 @@ import passthrough
 import unittest
 import os
 import shutil
+import hashlib
+
 
 class TestPassthroughMethods(unittest.TestCase):
     def __init__(self):
@@ -41,15 +43,27 @@ class TestPassthroughMethods(unittest.TestCase):
             print("Success: Removed the Base Path")
 
 
-    def createTestFile(file):
+    def createTestFile(self, file, data):
         print("Creating the test file: " + file)
-        f = open(file, "w")
-        f.write("somestring")
+        file_path = os.path.join(self._mt_path, file)
+        f = open(file_path, "w")
+        f.write(data)
         f.close()
 
 
-    def corruptTestFile(file_path):
+    def generateMD5Hash(self, file_name):
+        # Open the file
+        file = open(file_name, 'rb')
+        # Read contents of the file
+        file_data = file.read()
+        # Get hash of file
+        md5_value = hashlib.md5(file_data).hexdigest()
+        return md5_value
+
+
+    def corruptTestFileHash(file_path):
         print("Corrupting the test file: " + file_path)
+        hash = hashlib.md5()
 
 
     def deleteTestFile(file_path):
@@ -57,22 +71,31 @@ class TestPassthroughMethods(unittest.TestCase):
 
 
 
-    def initPasstrhough(self):
+    def initPassthrough(self):
         passthrough.main(mountpoint=self._mt_path, root=self._base_path)
 
 
     # Unit Tests
     # ==========
-    def testInitPasstrough(self):
+    def testInitPassthrough(self):
         TestPassthroughMethods.makeTestDirs(self)
         print("Success: Directory Creation")
         
         try:
-            TestPassthroughMethods.initPasstrhough(self)
+            TestPassthroughMethods.initPassthrough(self)
             print("Success: Initialization of Passthrough")
         except:
             print("Error: Initialization of Passthrough")
 
+    
+    def testCreateEmptyFile(self):
+        print("Testing creation of files & MD5 Hash")
+        f_name = "empty.txt"
+        f_data = ""
+        try:
+            self.createTestFile(f_name, f_data)
+        except:
+            print("FAILURE: Could not create the file " + f_name)
 
 
 # if __name__ == '__main__':
@@ -81,7 +104,8 @@ class TestPassthroughMethods(unittest.TestCase):
 
 def mainTest():
     test = TestPassthroughMethods()
-    test.testInitPasstrough()
+    test.testInitPassthrough()
+    test.testCreateEmptyFile()
 
 
 mainTest()
