@@ -57,13 +57,13 @@ class TestPassthroughMethods(unittest.TestCase):
         return md5_value
 
 
-    def corruptTestFileHash(self, file_name):
-        corrupted_data = "This is corrupted data"
-        # Generate fake hash
-        md5_value = hashlib.md5(corrupted_data.encode('utf-8')).hexdigest()
-        self.md5dictionary[file_name] = md5_value
-        self.saveHashes()
-
+    def corruptTestFile(self, file_name):
+        corrupted_data = "This is corrupted data. This will mess up our verification"
+        # Save file
+        file_path = os.path.join(self._base_path, file_name)
+        f = open(file_path, "w")
+        f.write(corrupted_data)
+        f.close()
 
     def deleteTestFile(self, file_path):
         if os.path.exists(file_path):
@@ -80,6 +80,11 @@ class TestPassthroughMethods(unittest.TestCase):
         self.md5_file = os.path.join(self._base_path, ".md5_hashes")
         with open(self.md5_file, "rb") as file:
             self.md5dictionary = pickle.load(file)
+
+
+    def accessCorruptedFile(self, file_name):
+        command = 'cat ' + os.path.join(self.base_dir, file_name)
+        os.popen(command)
 
 
     def saveHashes(self):
@@ -138,16 +143,10 @@ class TestPassthroughMethods(unittest.TestCase):
             print("SUCCESS: Hash not found in dictionary.")
 
 
-    def testCorruptFileHash(self):
+    def testCorruptFile(self):
         print("Checking to see if correct warning pops up")
-        self.corruptTestFileHash("empty.txt")
-        self.getMD5Values()
-        storedHash = self.md5dictionary["empty.txt"]
-        realHash = self.generateMD5Hash("empty.txt")
-        if realHash != storedHash:
-            print("SUCCESS: Hash Corrupted.")
-            print("\tReal Checksum: " + str(realHash))
-            print("\tStored Hash: " + str(storedHash))
+        self.corruptTestFile("empty.txt")
+        self.initPassthrough(self)
 
 
     def shutdownPassthrough(self):
@@ -164,10 +163,11 @@ def mainTest():
     test.setUp()
     test.testInitPassthrough()
     time.sleep(1)
+    test.testCreateEmptyFile()
+    test.testVerifyEmptyFileHash()
     test.shutdownPassthrough()
-    # test.testCreateEmptyFile()
-    # test.testVerifyEmptyFileHash()
-    # test.testCorruptFileHash()
+    test.testCorruptFile()
+
     # Comment these out for now. Don't want them to run just yet
     # test.testDeleteEmptyFile()
     # test.testDeleteEmptyFileHash()
