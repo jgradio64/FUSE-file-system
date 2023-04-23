@@ -64,7 +64,7 @@ class TestPassthroughMethods(unittest.TestCase):
         md5_value = hashlib.md5(corrupted_data.encode('utf-8')).hexdigest()
         corrupted_hash = {file_name: md5_value}
         self.md5dictionary.update(corrupted_hash)
-        self.save_hashes()
+        self.saveHashes()
 
 
     def deleteTestFile(self, file_path):
