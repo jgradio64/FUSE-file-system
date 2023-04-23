@@ -20,21 +20,23 @@ class TestPassthroughMethods(unittest.TestCase):
         base_dir = "base_test"
         mt_test_path = os.path.join(root, mt_dir)
         base_test_path = os.path.join(root, base_dir)
+        
         if os.path.exists(mt_test_path) or os.path.exists(base_test_path):
             # Delete directory then create a new one
-            self.deleteTestDirs(mt_test_path, base_test_path)
+            self.deleteTestDirs()
 
         os.makedirs(mt_test_path)
         os.makedirs(base_test_path)
-        return mt_test_path, base_test_path
+        self._mt_path = mt_test_path
+        self._base_path = base_test_path
 
 
-    def deleteTestDirs(mt_path, base_path):
-        if os.path.exists(mt_path):
-            shutil.rmtree(mt_path)
+    def deleteTestDirs(self):
+        if os.path.exists(self._mt_path):
+            shutil.rmtree(self._mt_path)
             print("Successfully removed the Mount Path")
-        if os.path.exists(base_path):
-            shutil.rmtree(base_path)
+        if os.path.exists(self._base_path):
+            shutil.rmtree(self._base_path)
             print("Successfully removed the Base Path")
 
 
