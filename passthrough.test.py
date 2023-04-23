@@ -64,7 +64,7 @@ class TestPassthroughMethods(unittest.TestCase):
 
 
     def deleteTestFile(file_path):
-        os.system("rm " + file_path)
+        os.remove("rm " + file_path)
 
 
     def initPassthrough(self):
