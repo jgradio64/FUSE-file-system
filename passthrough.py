@@ -214,7 +214,7 @@ class Passthrough(Operations):
 
 def main(mountpoint, root):
     # print("FUSE initialized")
-    FUSE(Passthrough(root), mountpoint, nothreads=True, foreground=True, allow_other=True)
+    FUSE(Passthrough(root), mountpoint, nothreads=True, foreground=True, allow_other=True, nonempty=True)
 
 if __name__ == '__main__':
     main(sys.argv[2], sys.argv[1])
