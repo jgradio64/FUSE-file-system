@@ -104,7 +104,7 @@ class TestPassthroughMethods(unittest.TestCase):
 def mainTest():
     test = TestPassthroughMethods()
     t_passthrough = Thread(test.testInitPassthrough())
-    t_passthrough.run()
+    t_passthrough.start()
     test.testCreateEmptyFile()
 
 
