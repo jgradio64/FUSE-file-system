@@ -100,7 +100,7 @@ class TestPassthroughMethods(unittest.TestCase):
             self.md5dictionary = pickle.load(file)
         storedHash = self.md5dictionary["empty.txt"]
         realHash = self.generateMD5Hash("empty.txt")
-        print("Hash's Equal: " storedHash == realHash)
+        print("Hash's Equal: " + (storedHash == realHash))
 
 
     def testDeleteEmptyFile(self):
