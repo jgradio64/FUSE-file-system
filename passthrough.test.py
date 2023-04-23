@@ -20,6 +20,8 @@ class TestPassthroughMethods(unittest.TestCase):
         base_dir = "base_test"
         mt_test_path = os.path.join(root, mt_dir)
         base_test_path = os.path.join(root, base_dir)
+        self._mt_path = mt_test_path
+        self._base_path = base_test_path
         
         if os.path.exists(mt_test_path) or os.path.exists(base_test_path):
             # Delete directory then create a new one
@@ -27,8 +29,7 @@ class TestPassthroughMethods(unittest.TestCase):
 
         os.makedirs(mt_test_path)
         os.makedirs(base_test_path)
-        self._mt_path = mt_test_path
-        self._base_path = base_test_path
+
 
 
     def deleteTestDirs(self):
