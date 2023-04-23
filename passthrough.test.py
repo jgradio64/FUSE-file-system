@@ -1,6 +1,6 @@
 from __future__ import with_statement
-from threading import Thread
 
+import subprocess
 import passthrough
 import unittest
 import os
@@ -17,10 +17,10 @@ class TestPassthroughMethods(unittest.TestCase):
     # ==============
     def makeTestDirs(self):
         root = os.getcwd()
-        mt_dir = "mt_test"
-        base_dir = "base_test"
-        mt_test_path = os.path.join(root, mt_dir)
-        base_test_path = os.path.join(root, base_dir)
+        self.mt_dir = "mt_test"
+        self.base_dir = "base_test"
+        mt_test_path = os.path.join(root, self.mt_dir)
+        base_test_path = os.path.join(root, self.base_dir)
         self._mt_path = mt_test_path
         self._base_path = base_test_path
 
@@ -71,8 +71,8 @@ class TestPassthroughMethods(unittest.TestCase):
 
 
     def initPassthrough(self):
-        t = Thread(target=passthrough.main, args=(self._mt_path, self._base_path,))
-        t.start()
+        subprocess.run(["python", "passthrough.py", self.base_dir, self.mt_dir])
+
 
 
     # Unit Tests
