@@ -54,7 +54,8 @@ class TestPassthroughMethods(unittest.TestCase):
 
     def generateMD5Hash(self, file_name):
         # Open the file
-        file = open(file_name, 'rb')
+        
+        file = open(os.path.join(self._base_path, file_name), 'rb')
         # Read contents of the file
         file_data = file.read()
         # Get hash of file
