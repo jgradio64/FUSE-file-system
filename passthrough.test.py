@@ -34,10 +34,8 @@ class PassthroughTest():
     def deleteTestDirs(self):
         if os.path.exists(self._mp_path):
             shutil.rmtree(self._mp_path)
-            print("SUCCESS: Removed the Mount Path")
         if os.path.exists(self._base_path):
             shutil.rmtree(self._base_path)
-            print("SUCCESS: Removed the Base Path")
 
 
     def createTestFile(self, file, data):
@@ -69,7 +67,7 @@ class PassthroughTest():
         if os.path.exists(file_path):
             os.remove(file_path)
         else:
-            print("The file does not exist") 
+            print("\tERROR: The named file does not exist") 
 
 
     def initPassthrough(self):
@@ -92,17 +90,23 @@ class PassthroughTest():
             pickle.dump(self.md5dictionary, file)
 
 
+    def shutdownPassthrough(self):
+        # Run `fusermount -u mp_test/`
+        os.popen('fusermount -u mp_test/')
+
+
     #    Tests    #
     # =========== #
     def testInitPassthrough(self):
+        print("=== TESTING SET UP OF PASSTHROUGH ===")
         self.makeTestDirs()
-        print("SUCCESS: Directory Creation")
+        print("\tSUCCESS: Directory Creation")
         
         try:
             self.initPassthrough()
-            print("SUCCESS: Initialization of Passthrough")
+            print("\tSUCCESS: Initialization of Passthrough")
         except:
-            print("FAILURE: Initialization of Passthrough")
+            print("\tFAILURE: Initialization of Passthrough")
 
     
     def testCreateEmptyFile(self):
@@ -111,49 +115,47 @@ class PassthroughTest():
         try:
             self.createTestFile(f_name, f_data)
         except:
-            print("FAILURE: Could not create the file " + f_name)
+            print("\tFAILURE: Could not create the file " + f_name)
 
 
     def testVerifyEmptyFileHash(self):
+        print("=== TESTING CHECKSUM VERIFICATION ===")
         self.getMD5Values()
         storedHash = self.md5dictionary["empty.txt"]
         realHash = self.generateMD5Hash("empty.txt")
         if storedHash == realHash:
-            print("SUCCESS: Checksum verification")
+            print("\tSUCCESS: Checksum verification")
         else:
-            print("FAILUE: Checksum verification")
+            print("\tFAILUE: Checksum verification")
 
 
     def testDeleteEmptyFile(self):
+        print("=== TESTING FILE DELETION ===")
         # Get path to file = mp_test + file name
         f_path = os.path.join(self.mp_dir, "empty.txt")
         try:
             self.deleteTestFile(f_path)
-            print("SUCCESS: File [empty.txt] deleted")
+            print("\tSUCCESS: File [empty.txt] deleted")
         except:
-            print("FAILURE: unable to delete file")
+            print("\tFAILURE: unable to delete file")
 
 
     def testDeleteEmptyFileHash(self):
+        print("=== TESTING CHECKSUM DELETION ===")
         self.getMD5Values()
         if "empty.txt" in self.md5dictionary:
-            print("FAILURE: Hash still found in dictionary.")
+            print("\tFAILURE: Hash still found in dictionary.")
         else:
-            print("SUCCESS: Hash not found in dictionary.")
+            print("\tSUCCESS: Hash not found in dictionary.")
 
 
     def testCorruptFile(self):
+        print("=== TESTING FILE CORRUPTION DETECTION ===")
         self.corruptTestFile("empty.txt")
         self.initPassthrough()
         # Wait for process to start back up again
         time.sleep(1)
         self.accessCorruptedFile("empty.txt")
-
-
-
-    def shutdownPassthrough(self):
-        # Run `fusermount -u mp_test/`
-        os.popen('fusermount -u mp_test/')
 
 
 # if __name__ == '__main__':
