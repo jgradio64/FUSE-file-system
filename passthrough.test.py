@@ -11,10 +11,6 @@ import time
 
 
 class TestPassthroughMethods(unittest.TestCase):
-    def __init__(self):
-        print("Testing class initalized")
-        # END MODIFICATION
-
     # Helper Methods
     # ==============
     def makeTestDirs(self):
@@ -110,8 +106,8 @@ class TestPassthroughMethods(unittest.TestCase):
         
 
 
-# if __name__ == '__main__':
-#     unittest.main()
+if __name__ == '__main__':
+    unittest.main()
 
 
 def mainTest():
