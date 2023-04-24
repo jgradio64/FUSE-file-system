@@ -119,7 +119,7 @@ class Passthrough(Operations):
         if path[1:] in self.md5dictionary:
            self.md5dictionary.pop(path[1:])
            self.save_hashes()
-        print("SUCCESS: MD5 removed on unlink.")
+        # print("SUCCESS: MD5 removed on unlink.")
         # END MODIFICATION
         return os.unlink(self._full_path(path))
 
