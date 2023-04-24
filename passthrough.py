@@ -5,7 +5,7 @@ from __future__ import with_statement
 import os
 import sys
 import errno
-# MODIFIED 4/14 - Chase
+# MODIFIED 4/14
 import hashlib # to generate md5sums
 import pickle # to handle serialization of the md5dictionary (persistence)
 # END MODIFICATION
@@ -16,7 +16,7 @@ from fusepy import FUSE, FuseOSError, Operations, fuse_get_context
 class Passthrough(Operations):
     def __init__(self, root):
         self.root = root
-        # MODIFIED 4/14 - Chase
+        # MODIFIED 4/14
         self.md5_file = os.path.join(root, ".md5_hashes")
 
         if os.path.exists(self.md5_file):  # if the dictionary exists, load and instantiate it
@@ -35,7 +35,7 @@ class Passthrough(Operations):
         path = os.path.join(self.root, partial)
         return path
 
-    # MODIFIED 4/14 - Chase
+    # MODIFIED 4/14
     def _get_md5(self, path):
         # MODIFIED 4/20 - Quang
         if not os.path.exists(self.md5_file):  # if the dictionary exists, load and instantiate it
@@ -115,7 +115,7 @@ class Passthrough(Operations):
             'f_frsize', 'f_namemax'))
 
     def unlink(self, path):
-        # MODIFIED 4/15 - Chase
+        # MODIFIED 4/15
         if path[1:] in self.md5dictionary:
            self.md5dictionary.pop(path[1:])
            self.save_hashes()
@@ -127,7 +127,7 @@ class Passthrough(Operations):
         return os.symlink(target, self._full_path(name))
 
     def rename(self, old, new):
-        # MODIFIED 4/14 - Chase
+        # MODIFIED 4/14
         old_path = self._full_path(old)
         new_path = self._full_path(new)
         os.rename(old_path, new_path) # os.rename doesn't return anything so we can call it early
@@ -138,7 +138,7 @@ class Passthrough(Operations):
         # END MODIFICATION
 
     def link(self, target, name):
-        # MODIFIED 4/14 - Chase
+        # MODIFIED 4/14
         target_path = self._full_path(target)
         name_path = self._full_path(name)
         os.link(name_path, target_path) # same as rename() here with os.link
@@ -155,7 +155,7 @@ class Passthrough(Operations):
     def open(self, path, flags):
         full_path = self._full_path(path)
         # print("DEBUG: Open Called")
-        # MODIFIED 4/14 - Chase
+        # MODIFIED 4/14
         # check the integrity before opening the file
         current_md5 = self._get_md5(full_path)
         stored_md5 = self.md5dictionary.get(path[1:])
@@ -177,7 +177,7 @@ class Passthrough(Operations):
         full_path = self._full_path(path)
         fd = os.open(full_path, os.O_WRONLY | os.O_CREAT, mode)
         os.chown(full_path,uid,gid) #chown to context uid & gid
-        # MODIFIED 4/14 - Chase
+        # MODIFIED 4/14
         self._update_md5(path)
         # END MODIFICATION
         return fd
@@ -190,7 +190,7 @@ class Passthrough(Operations):
     def write(self, path, buf, offset, fh):
         # print("DEBUG: Write Called");
         os.lseek(fh, offset, os.SEEK_SET)
-        # MODIFIED 4/14 - Chase
+        # MODIFIED 4/14
         # need to write BEFORE we get and set the new hash (this took too long to realize)
         # os.write actually returns the # of written bytes, handling that too just in case
         written = os.write(fh, buf)
@@ -203,7 +203,7 @@ class Passthrough(Operations):
         full_path = self._full_path(path)
         with open(full_path, 'r+') as f:
             f.truncate(length)
-        # MODIFIED 4/14 - Chase
+        # MODIFIED 4/14
         self._update_md5(path)
         # END MODIFICATION
 
