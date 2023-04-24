@@ -106,6 +106,7 @@ while (loop):
     print("[1] Delete .md5_hashes")
     print("[2] Generate random file")
     print("[3] Corrupt a file")
+    print("[4] passthrough.test.py automated test")
     print("[0] Exit")
     cmd = input("> ")
     
@@ -121,6 +122,10 @@ while (loop):
         corrupt()
         os.system('clear')
         print("Selected file has been corrupted.\n")
+    elif (cmd == '4'):
+        os.popen('konsole -e python passthrough.test.py')
+        os.system('clear')
+        print("passthrough.test.py has been run.\n")
     elif (cmd == '0'):
         loop = False
     else:

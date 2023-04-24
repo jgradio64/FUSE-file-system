@@ -170,6 +170,7 @@ def mainTest():
     test.testDeleteEmptyFile()
     test.testDeleteEmptyFileHash()
     test.shutdownPassthrough()
+    input()
 
 
 mainTest()
