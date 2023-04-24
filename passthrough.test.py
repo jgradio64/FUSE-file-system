@@ -170,7 +170,7 @@ def mainTest():
     test.testDeleteEmptyFile()
     test.testDeleteEmptyFileHash()
     test.shutdownPassthrough()
-    input()
+    input("Press any key to exit.")
 
 
 mainTest()
